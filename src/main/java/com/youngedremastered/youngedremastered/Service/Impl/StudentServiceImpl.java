@@ -2,6 +2,7 @@ package com.youngedremastered.youngedremastered.Service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngedremastered.youngedremastered.Entities.Student;
+import com.youngedremastered.youngedremastered.Exception.ValidationException;
 import com.youngedremastered.youngedremastered.Repositories.CourseRepository;
 import com.youngedremastered.youngedremastered.Repositories.StudentRepository;
 import com.youngedremastered.youngedremastered.Service.StudentService;
@@ -20,14 +21,37 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
 
+    private void validateStudent(Student student) {
+        if (student.getName() == null || student.getName().trim().isEmpty()) {
+            throw new ValidationException("Student name cannot be empty");
+        }
+        if (student.getAge() == null || student.getAge() <= 0) {
+            throw new ValidationException("Student age must be positive");
+        }
+        if (student.getGender() == null || student.getGender().trim().isEmpty()) {
+            throw new ValidationException("Student gender cannot be empty");
+        }
+        if (!student.getGender().equalsIgnoreCase("male") && !student.getGender().equalsIgnoreCase("female")) {
+            throw new ValidationException("Gender can only be 'male' or 'female'");
+        }
+        if (student.getGrade() == null || student.getGrade() < 5 || student.getGrade() > 8) {
+            throw new ValidationException("Grade must be between 5 and 8");
+        }
+        if (student.getCourse() != null && !courseRepository.existsById(student.getCourse().getCid())) {
+            throw new ValidationException("Selected course does not exist");
+        }
+    }
+
     @Override
     public Student createStudent(Student student) {
+        validateStudent(student);
         return studentRepository.save(student);
     }
 
     @Override
     public Student updateStudent(Long id, Student updated) {
         Student existing = studentRepository.findById(id).orElseThrow();
+        validateStudent(updated);
         existing.setName(updated.getName());
         existing.setAge(updated.getAge());
         existing.setGender(updated.getGender());

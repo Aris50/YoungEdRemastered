@@ -10,7 +10,7 @@ export interface Student {
     grade: number;
     course: {
         cid: number;
-    };
+    } | null;
 }
 
 export interface Course {
