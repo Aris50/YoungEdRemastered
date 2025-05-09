@@ -8,6 +8,8 @@ import com.youngedremastered.youngedremastered.Repositories.StudentRepository;
 import com.youngedremastered.youngedremastered.Service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.youngedremastered.youngedremastered.DTO.CourseAverageAgeDTO;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Comparator;
 import java.util.List;
@@ -113,5 +115,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(Long id) {
         return studentRepository.findById(id).orElseThrow();
+    }
+
+    @Cacheable("averageAgeByCourse")
+    @Override
+    public List<CourseAverageAgeDTO> getAverageAgeByCourse() {
+        return studentRepository.findAverageAgeByCourse();
     }
 }

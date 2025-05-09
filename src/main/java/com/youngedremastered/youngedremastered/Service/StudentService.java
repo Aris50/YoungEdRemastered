@@ -1,5 +1,6 @@
 package com.youngedremastered.youngedremastered.Service;
 
+import com.youngedremastered.youngedremastered.DTO.CourseAverageAgeDTO;
 import com.youngedremastered.youngedremastered.Entities.Student;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface StudentService {
     void deleteStudent(Long id);
     List<Student> getAllStudents(String sortBy, String filterBy, String filterValue);
     Student getStudentById(Long id);
+    List<CourseAverageAgeDTO> getAverageAgeByCourse();
 }

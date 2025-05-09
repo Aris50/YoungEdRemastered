@@ -1,5 +1,6 @@
 package com.youngedremastered.youngedremastered.Controller;
 
+import com.youngedremastered.youngedremastered.DTO.CourseAverageAgeDTO;
 import com.youngedremastered.youngedremastered.Entities.Student;
 import com.youngedremastered.youngedremastered.Service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,10 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/statistics/average-age-by-course")
+    public List<CourseAverageAgeDTO> getAverageAgeByCourse() {
+        return studentService.getAverageAgeByCourse();
     }
 }
