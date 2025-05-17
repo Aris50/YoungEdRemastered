@@ -137,4 +137,39 @@
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
-				
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>x64</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>os.arch</name>
+					<value>x86_64</value>
+				</property>
+			</activation>
+			<properties>
+				<target.architecture>x64</target.architecture>
+			</properties>
+		</profile>
+		<profile>
+			<id>arm64</id>
+			<activation>
+				<property>
+					<name>os.arch</name>
+					<value>aarch64</value>
+				</property>
+			</activation>
+			<properties>
+				<target.architecture>arm64</target.architecture>
+			</properties>
+		</profile>
+	</profiles>
+</project>
