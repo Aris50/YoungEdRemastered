@@ -27,7 +27,7 @@ public class DatabaseSeeder {
 
             // 1. Create 100 categories
             List<Category> categories = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 10; i++) {
                 Category c = new Category();
                 c.setName(faker.educator().course());
                 categories.add(c);
@@ -36,7 +36,7 @@ public class DatabaseSeeder {
 
             // 2. Create 10,000 courses
             List<Course> courses = new ArrayList<>();
-            for (int i = 0; i < 10_000; i++) {
+            for (int i = 0; i < 10; i++) {
                 Course course = new Course();
                 course.setName(faker.book().title());
                 course.setDuration(faker.number().numberBetween(1, 6) + " months");
@@ -47,15 +47,15 @@ public class DatabaseSeeder {
             courseRepo.saveAll(courses);
 
             // 3. Create 100,000 students
-            int batchSize = 1000;
-            for (int i = 0; i < 100_000; i += batchSize) {
+            int batchSize = 10;
+            for (int i = 0; i < 10; i += batchSize) {
                 List<Student> students = new ArrayList<>();
                 for (int j = 0; j < batchSize; j++) {
                     Student student = new Student();
                     student.setName(faker.name().fullName());
                     student.setAge(faker.number().numberBetween(18, 30));
                     student.setGender(faker.options().option("Male", "Female", "Other"));
-                    student.setGrade(faker.number().randomDouble(2, 4, 10));
+                    student.setGrade(faker.number().randomDouble(0, 4, 8));
 
                     // 20% chance of null course
                     if (faker.random().nextInt(10) < 8) {
