@@ -57,12 +57,8 @@ public class DatabaseSeeder {
                     student.setGender(faker.options().option("Male", "Female", "Other"));
                     student.setGrade(faker.number().randomDouble(0, 4, 8));
 
-                    // 20% chance of null course
-                    if (faker.random().nextInt(10) < 8) {
-                        student.setCourse(courses.get(faker.random().nextInt(courses.size())));
-                    } else {
-                        student.setCourse(null);
-                    }
+                    // Always assign a course
+                    student.setCourse(courses.get(faker.random().nextInt(courses.size())));
 
                     students.add(student);
                 }
